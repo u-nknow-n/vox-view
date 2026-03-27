@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vox Launcher | Don't Starve Together Server Manager</title>
+    <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/diogo-webber/vox-launcher/refs/heads/main/app/assets/icon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0b0e11;
+            --accent: #3498db;
+            --success: #2ecc71;
+            --card-bg: rgba(23, 27, 33, 0.9);
+            --border: rgba(255, 255, 255, 0.08);
+            --text: #ffffff;
+            --text-dim: #94a3b8;
+            --badge-label-bg: #24292e;
+            --badge-value-bg: #005cc5;
+        }
+
+        * { box-sizing: border-box; transition: all 0.2s ease-in-out; scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            margin: 0;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-color: var(--bg);
+            background-image: radial-gradient(circle at top center, rgba(52, 152, 219, 0.12) 0%, rgba(11, 14, 17, 0) 60%);
+            background-repeat: no-repeat;
+            background-attachment: scroll;
+        }
+
+        .container { max-width: 940px; margin: 0 auto; padding: 0 20px; }
+
+        /* --- HERO --- */
+        .hero { padding: 100px 0 60px; text-align: center; }
+        .project-icon { width: 110px; filter: drop-shadow(0 0 20px rgba(52, 152, 219, 0.3)); margin-bottom: 25px; }
+        
+        /* Título Hero em Maiúsculo */
+        h1 { 
+            font-size: 3.8rem; 
+            margin: 0; 
+            font-weight: 800; 
+            letter-spacing: -2px; 
+            text-transform: uppercase; 
+        }
+        
+        .hero p { font-size: 1.25rem; color: var(--text-dim); max-width: 600px; margin: 15px auto 30px; font-weight: 300; }
+
+        /* --- BADGES --- */
+        .badge-group { display: flex; justify-content: center; gap: 15px; margin-bottom: 45px; flex-wrap: wrap; }
+        .badge { display: inline-flex; font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; border-radius: 3px; overflow: hidden; }
+        .badge-label { background: var(--badge-label-bg); padding: 4px 10px; color: #fff; }
+        .badge-value { background: var(--badge-value-bg); padding: 4px 10px; color: #fff; }
+
+        /* --- BOTÃO --- */
+        .btn-download {
+            display: inline-flex; align-items: center;
+            background: var(--success); color: white; text-decoration: none;
+            padding: 18px 45px; border-radius: 12px; font-weight: 700; font-size: 1.1rem;
+            box-shadow: 0 10px 30px rgba(46, 204, 113, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .btn-download:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(46, 204, 113, 0.4); }
+
+        /* --- SEÇÕES --- */
+        section { padding: 50px 0; border-top: 1px solid var(--border); }
+        
+        /* Títulos de Seção em Maiúsculo */
+        h2 { 
+            font-size: 1.5rem; 
+            margin-bottom: 30px; 
+            margin-top: 0; 
+            font-weight: 700; 
+            color: #fff; 
+            text-transform: uppercase; 
+            letter-spacing: 2px;
+        }
+
+        .steps { display: grid; gap: 15px; }
+        .step-card { background: var(--card-bg); border: 1px solid var(--border); padding: 25px; border-radius: 16px; display: flex; gap: 20px; align-items: center; }
+        .step-num { background: rgba(52, 152, 219, 0.15); color: var(--accent); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0; font-size: 1.2rem; }
+
+        .features-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        .f-item { background: rgba(255,255,255,0.02); padding: 25px; border-radius: 16px; border: 1px solid var(--border); }
+        .f-item h3 { margin: 0 0 10px 0; font-size: 1rem; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .f-item p { margin: 0; font-size: 0.95rem; color: var(--text-dim); }
+
+        .grid-imgs { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; }
+        .img-box { border-radius: 14px; overflow: hidden; border: 1px solid var(--border); cursor: pointer; background: #000; position: relative; }
+        .img-box img { width: 100%; display: block; opacity: 0.85; }
+        .img-box:hover img { opacity: 1; transform: scale(1.03); }
+        .img-caption { padding: 12px 15px; background: rgba(0,0,0,0.6); text-align: left; }
+        .img-caption h4 { margin: 0; font-size: 0.85rem; color: #fff; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* FAQ MELHORADO */
+        .faq-grid { display: grid; gap: 15px; }
+        .faq-item { 
+            background: rgba(255,255,255,0.02); 
+            padding: 30px; 
+            border-radius: 16px; 
+            border: 1px solid var(--border);
+            text-align: left;
+        }
+        .faq-item h4 { 
+            margin: 0 0 15px 0; 
+            color: #fff; 
+            font-size: 1rem; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+            color: var(--accent);
+        }
+        .faq-item p { margin: 0; font-size: 0.95rem; color: var(--text-dim); line-height: 1.7; }
+        .faq-item b { color: #fff; }
+
+        footer { text-align: center; padding: 50px 0; color: var(--text-dim); font-size: 0.8rem; border-top: 1px solid var(--border); text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Lightbox */
+        #lightbox { display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); align-items: center; justify-content: center; cursor: zoom-out; }
+        #lightbox img { max-width: 90%; max-height: 80%; border-radius: 10px; border: 1px solid var(--border); }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.6rem; }
+            .features-grid, .grid-imgs { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="hero">
+            <img src="https://raw.githubusercontent.com/diogo-webber/vox-launcher/refs/heads/main/app/assets/icon.ico" class="project-icon" alt="Vox Icon">
+            <h1>Vox Launcher</h1>
+            <p>Gerenciamento profissional e simplificado para servidores dedicados de <b>Don't Starve Together</b> no Windows.</p>
+            
+            <div class="badge-group">
+                <div class="badge">
+                    <div class="badge-label">Release</div>
+                    <div class="badge-value">V1.3.2</div>
+                </div>
+                <div class="badge">
+                    <div class="badge-label">Downloads</div>
+                    <div class="badge-value">18K</div>
+                </div>
+                <div class="badge">
+                    <div class="badge-label">Python</div>
+                    <div class="badge-value">3.10</div>
+                </div>
+            </div>
+
+            <a href="https://github.com/u-nknow-n/vox-view/releases/download/vox-view/VoxLauncher.zip" class="btn-download">Baixar Agora (.ZIP)</a>
+        </header>
+
+        <section id="setup">
+            <h2>🚀 Início Rápido</h2>
+            <div class="steps">
+                <div class="step-card"><div class="step-num">1</div><div>Extraia o conteúdo do arquivo ZIP e execute o <b>Vox Launcher.exe</b>.</div></div>
+                <div class="step-card"><div class="step-num">2</div><div>Aponte o diretório do jogo e selecione o mundo (Cluster) desejado.</div></div>
+                <div class="step-card"><div class="step-num">3</div><div>Insira o seu <b>Server Token</b> e clique no botão <b>LAUNCH</b>.</div></div>
+            </div>
+            <p style="margin-top: 25px; text-align: center; color: var(--text-dim); margin-bottom: 0;">
+                💡 Dica: Confira o <a href="https://www.youtube.com/watch?v=dxl-RV0LtEA" target="_blank" style="color:var(--accent); text-decoration: none; font-weight: 600;">TUTORIAL EM VÍDEO DO [JAZZY GAMES]</a>.
+            </p>
+        </section>
+
+        <section id="recursos">
+            <h2>✨ Recursos Principais</h2>
+            <div class="features-grid">
+                <div class="f-item"><h3>Gestão de Mundo</h3><p>Controles precisos para Salvar, Resetar, Rollback e Finalizar o servidor sem comandos complexos.</p></div>
+                <div class="f-item"><h3>Console Integrado</h3><p>Acompanhe logs em tempo real e envie comandos administrativos diretamente pela interface.</p></div>
+                <div class="f-item"><h3>Monitoramento</h3><p>Status vivo: veja contagem de players, dia, estação e consumo de hardware instantaneamente.</p></div>
+                <div class="f-item"><h3>Suporte a Mods</h3><p>Compatibilidade nativa com mods e suporte a Shards para mundos expandidos (Caves/Forest).</p></div>
+            </div>
+        </section>
+
+        <section>
+            <h2>📸 Galeria de Interface</h2>
+            <div class="grid-imgs">
+                <div class="img-box" onclick="openLB(this)"><img src="https://github.com/diogo-webber/vox-launcher/blob/main/.github/readme_assets/offline.png?raw=true" alt="1"><div class="img-caption"><h4>01. Instruções</h4></div></div>
+                <div class="img-box" onclick="openLB(this)"><img src="https://github.com/diogo-webber/vox-launcher/blob/main/.github/readme_assets/starting.png?raw=true" alt="2"><div class="img-caption"><h4>02. Inicialização</h4></div></div>
+                <div class="img-box" onclick="openLB(this)"><img src="https://github.com/diogo-webber/vox-launcher/blob/main/.github/readme_assets/online.png?raw=true" alt="3"><div class="img-caption"><h4>03. Dashboard Online</h4></div></div>
+                <div class="img-box" onclick="openLB(this)"><img src="https://github.com/diogo-webber/vox-launcher/blob/main/.github/readme_assets/logscreen.png?raw=true" alt="4"><div class="img-caption"><h4>04. Terminal de Logs</h4></div></div>
+            </div>
+        </section>
+
+        <section>
+            <h2>❓ Perguntas Frequentes</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h4>Por que o Windows Defender alerta sobre o app?</h4>
+                    <p>O Vox Launcher é compilado via <b>PyInstaller</b>. Infelizmente, por ser um método comum de empacotamento em Python, alguns antivírus geram "falsos positivos". O projeto é <b>Open Source</b> e totalmente seguro. Você pode adicionar uma exceção nas configurações de segurança do Windows sem riscos.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Como gerenciar os Mods no servidor?</h4>
+                    <p>Você não precisa configurar nada no Launcher! Basta habilitar os mods desejados durante a criação do mundo dentro do próprio <b>Don't Starve Together</b>. O Launcher lê essas preferências automaticamente ao iniciar o processo.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Onde encontro o meu Cluster Token?</h4>
+                    <p>O token é essencial para autenticar seu servidor. Você pode gerar um novo na sua conta oficial da <b>Klei Accounts</b>. Sem ele, o servidor não aparecerá na lista pública do jogo.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Encontrei um erro, o que devo fazer?</h4>
+                    <p>Se você encontrar comportamentos inesperados, por favor, abra uma <b>Issue</b> no repositório oficial. Anexar o arquivo de log (localizado em <i>appdata/logs/applog.txt</i>) ajuda muito na resolução rápida do problema.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>Vox Launcher - Licença MIT - 2026</p>
+        </footer>
+    </div>
+
+    <div id="lightbox" onclick="this.style.display='none'"><img id="lb-img" src=""></div>
+
+    <script>
+        function openLB(el) {
+            document.getElementById('lb-img').src = el.querySelector('img').src;
+            document.getElementById('lightbox').style.display = 'flex';
+        }
+    </script>
+</body>
+</html>
